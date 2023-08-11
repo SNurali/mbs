@@ -43,6 +43,8 @@ INSTALLED_APPS = [
 
     'authapp.apps.AuthappConfig',
     'profileapp.apps.ProfileappConfig',
+    'catalogapp.apps.CatalogappConfig',
+    'productapp.apps.ProductappConfig',
 ]
 
 MIDDLEWARE = [
