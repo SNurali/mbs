@@ -27,6 +27,7 @@ urlpatterns = [
     path('api/', include('profileapp.urls')),
     path('api/', include('catalogapp.urls')),
     path('api/', include('productapp.urls')),
+    path('api/', include('basketapp.urls')),
 ]
 
 # загрузка статики

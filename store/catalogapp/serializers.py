@@ -1,8 +1,6 @@
-from itertools import count
-
+from productapp.serializers import ProductSerializer
 from .models import Category
-from productapp.models import Review
-from productapp.models import Product
+from productapp.models import Review, Product
 
 from rest_framework import serializers
 
@@ -35,29 +33,10 @@ class CategorySerializer(serializers.ModelSerializer):
 			return []
 
 
-class ImageItemSerializer(serializers.ModelSerializer):
-	"""
-	Сериализация изображений для товара.
-	"""
-	def to_representation(self, instance):
-		return {'src': instance.image.url, 'alt': instance.image.name}
-
-
-class TagItemSerializer(serializers.ModelSerializer):
-	"""
-	Сериализация тэгов для товаров.
-	"""
-	def to_representation(self, instance):
-		return {'id': instance.pk, 'name': instance.name}
-
-
-class CatalogSerializer(serializers.ModelSerializer):
-	images = ImageItemSerializer(many=True)
-	tags = TagItemSerializer(many=True)
+class CatalogSerializer(ProductSerializer):
 	reviews = serializers.SerializerMethodField()
 
-	class Meta:
-		model = Product
+	class Meta(ProductSerializer.Meta):
 		fields = (
 			'id',
 			'category',
@@ -70,8 +49,37 @@ class CatalogSerializer(serializers.ModelSerializer):
 			'images',
 			'tags',
 			'reviews',
-			'rating',
+			'rating'
 		)
 
 	def get_reviews(self, obj):
 		return len(Review.objects.filter(product=obj))
+
+
+class ProductSaleDateSerializer(serializers.Serializer):
+	def to_representation(self, instance):
+		return instance.strftime('%m-%d')
+
+
+class ProductSaleSerializer(ProductSerializer):
+	"""
+	Сериализация товаров по скидке (распродажа).
+	"""
+	dateFrom = ProductSaleDateSerializer()
+	dateTo = ProductSaleDateSerializer()
+	price = serializers.SerializerMethodField()
+
+	class Meta(ProductSerializer.Meta):
+		fields = (
+			'id',
+			'price',
+			'salePrice',
+			'dateFrom',
+			'dateTo',
+			'title',
+			'images',
+		)
+
+	def get_price(self, obj):
+		product = Product.objects.get(pk=obj.pk)
+		return product.price

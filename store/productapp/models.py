@@ -10,8 +10,18 @@ def product_image_upload_path(instance, filename):
 	)
 
 
+class Tag(models.Model):
+	name = models.CharField(max_length=30, null=False)
+
+
 class Product(models.Model):
-	price = models.DecimalField(max_digits=7, decimal_places=2)
+	class Meta:
+		ordering = 'id',
+
+	price = models.FloatField()
+	salePrice = models.FloatField(null=True)
+	dateFrom = models.DateField(null=True, blank=True)
+	dateTo = models.DateField(null=True, blank=True)
 	category = models.ForeignKey(Category, on_delete=models.CASCADE)
 	count = models.PositiveIntegerField()
 	date = models.DateTimeField(auto_now_add=True)
@@ -19,17 +29,13 @@ class Product(models.Model):
 	description = models.TextField(max_length=100, null=True, blank=True)
 	fullDescription = models.TextField(max_length=300, null=True, blank=True)
 	freeDelivery = models.BooleanField(default=False)
-	rating = models.DecimalField(max_digits=2, decimal_places=1)
+	rating = models.FloatField(default=0)
+	tags = models.ManyToManyField(Tag, related_name='product')
 
 
 class ProductImage(models.Model):
 	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
 	image = models.ImageField(upload_to=product_image_upload_path)
-
-
-class Tag(models.Model):
-	name = models.CharField(max_length=30, null=False)
-	product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL, related_name='tags')
 
 
 class Review(models.Model):

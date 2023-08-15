@@ -17,7 +17,7 @@ class ProductImageAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-	list_display = 'id', 'name', 'product'
+	list_display = 'id', 'name'
 	ordering = 'id',
 
 

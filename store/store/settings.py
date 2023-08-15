@@ -40,11 +40,13 @@ INSTALLED_APPS = [
 
     'frontend',
     'rest_framework',
+    'django_filters',
 
     'authapp.apps.AuthappConfig',
     'profileapp.apps.ProfileappConfig',
     'catalogapp.apps.CatalogappConfig',
     'productapp.apps.ProductappConfig',
+    'basketapp.apps.BasketappConfig',
 ]
 
 MIDDLEWARE = [
@@ -154,7 +156,10 @@ LOGGING = {
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
-
+    'SEARCH_PARAM': 'filter',
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'catalogapp.pagination.CustomPagination',
+    'PAGE_SIZE': 1,
 }
