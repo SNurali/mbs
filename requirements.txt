@@ -1,9 +1,10 @@
 asgiref==3.7.2
-diploma-frontend @ file:///Users/artem/PycharmProjects/Django_Diploma/diploma-frontend/dist/diploma-frontend-0.6.tar.gz#sha256=b2b627422eb6a856c845e5c4157fa4c6d9642554b215431cad3af1c9f0e88c4d
+diploma-frontend @ file:///Users/artem/PycharmProjects/Django_Diploma/diploma-frontend/dist/diploma-frontend-0.6.tar.gz#sha256=0759dc50cb0c4767d0b67322900d5566d1c14c8aa6ee0a313b6935edd77b247d
 Django==4.2.4
 django-filter==23.2
 django-request-logging==0.7.5
 djangorestframework==3.14.0
 Pillow==10.0.0
+python-dotenv==1.0.0
 pytz==2023.3
 sqlparse==0.4.4

@@ -1,76 +1,96 @@
-from .models import Category
-from .pagination import CustomPagination
-from .serializers import CategorySerializer, CatalogSerializer, ProductSaleSerializer
-from productapp.models import Product
-from productapp.serializers import ProductSerializer
+from django.db.models import QuerySet
+from datetime import datetime
 
-from rest_framework.views import APIView
-from rest_framework.request import Request
-from rest_framework.response import Response
-from rest_framework import status
+from .models import Category
+from .pagination import CatalogPagination
+from .serializers import CategorySerializer, CatalogSerializer, CatalogSaleSerializer
+from productapp.models import Product
+
 from rest_framework.generics import ListAPIView
 
 
-class CategoryView(APIView):
-	def get(self, request: Request) -> Response:
-		categories = Category.objects.all()
-		serialized = CategorySerializer(categories, many=True)
-
-		return Response(data=serialized.data, status=status.HTTP_200_OK)
+class CategoryView(ListAPIView):
+	"""
+	Список родительских категорий и их подкатегорий.
+	"""
+	queryset = (
+		Category.objects
+		.select_related('parent')
+		.filter(parent__isnull=True, archived=False)
+	)
+	serializer_class = CategorySerializer
 
 
 class CatalogView(ListAPIView):
+	"""
+	Каталог товаров.
+	"""
 	serializer_class = CatalogSerializer
-	pagination_class = CustomPagination
+	pagination_class = CatalogPagination
 
-	def get_queryset(self):
-		queryset = Product.objects.all()
+	def get_queryset(self) -> QuerySet:
+		"""
+		Фильтрация товаров.
 
-		name = self.request.query_params.get('filter[name]')
+		:return: queryset
+		"""
+		# Список товаров.
+		queryset = (
+			Product.objects
+			.select_related('category')
+			.prefetch_related('images', 'tags', 'reviews')
+			.filter(archived=False)
+		)
+
+		# Получение параметров.
+		params = self.request.query_params
+		name = params.get('filter[name]')
+		min_price = params.get('filter[minPrice]')
+		max_price = params.get('filter[maxPrice]')
+		free_delivery = params.get('filter[freeDelivery]')
+		available = params.get('filter[available]')
+		category = params.get('category')
+		tags = params.getlist('tags[]')
+
+		# Фильтр товаров по параметрам.
 		if name is not None:
 			queryset = queryset.filter(title__icontains=name)
-
-		min_price = self.request.query_params.get('filter[minPrice]')
 		if min_price is not None:
 			queryset = queryset.filter(price__gte=min_price)
-
-		max_price = self.request.query_params.get('filter[maxPrice]')
 		if max_price is not None:
 			queryset = queryset.filter(price__lte=max_price)
-
-		free_delivery = self.request.query_params.get('filter[freeDelivery]')
 		if free_delivery == 'true':
 			queryset = queryset.filter(freeDelivery=True)
-
-		available = self.request.query_params.get('filter[available]')
 		if available == 'true':
 			queryset = queryset.filter(count__gte=1)
-
-		category = self.request.query_params.get('category')
 		if category is not None:
 			queryset = queryset.filter(category=category)
-
-		tags = self.request.query_params.getlist('tags[]')
 		if tags is not None:
 			for id_tag in tags:
 				queryset = queryset.filter(tags__id=id_tag)
 
-		page = self.request.query_params.get('currentPage')
-		if page is not None:
-			pass
 		return queryset
 
-	def filter_queryset(self, queryset):
+	def filter_queryset(self, queryset) -> QuerySet:
+		"""
+		Сортировка товаров.
+
+		:param queryset: Товары
+		:return: queryset
+		"""
 		sort = self.request.query_params.get('sort')
 		sort_type = self.request.query_params.get('sortType')
+		sort_types = ('price', 'reviews', 'rating')
 
+		# Сортировка по убыванию. Если не указан тип сортировки, то сортировка по дате.
 		if sort_type == 'inc':
-			if sort == 'price' or sort == 'reviews' or sort == 'rating':
+			if sort in sort_types:
 				queryset = queryset.order_by('-' + sort)
 			else:
 				queryset = queryset.order_by('-date')
 		else:
-			if sort == 'price' or sort == 'reviews' or sort == 'rating':
+			# Сортировка по возрастанию. Если не указан тип сортировки, то сортировка по дате.
+			if sort in sort_types:
 				queryset = queryset.order_by(sort)
 			else:
 				queryset = queryset.order_by('date')
@@ -78,26 +98,53 @@ class CatalogView(ListAPIView):
 		return queryset
 
 
-class ProductsPopularView(APIView):
+class ProductsPopularView(ListAPIView):
 	"""
-	Популярные товары с сортировкой по рейтингу по убыванию.
+	Список первых 8 популярных товаров.
+	Сортировка по рейтингу от большего к меньшему либо по кол-ву продаж.
 	"""
-	def get(self, request: Request) -> Response:
-		products = Product.objects.all().order_by('-rating')
-		serialized = CatalogSerializer(products, many=True)
+	queryset = (
+		Product.objects
+		.select_related('category')
+		.prefetch_related('images', 'tags', 'reviews')
+		.filter(count__gte=1, archived=False)
+		.order_by('-rating', 'salesCount')
+	)[:8]
+	serializer_class = CatalogSerializer
 
-		return Response(data=serialized.data, status=status.HTTP_200_OK)
 
-
-class ProductsLimitedView(APIView):
-	def get(self, request: Request) -> Response:
-		products = Product.objects.filter(count__gte=1).order_by('count')
-		serialized = CatalogSerializer(products, many=True)
-
-		return Response(data=serialized.data, status=status.HTTP_200_OK)
+class ProductsLimitedView(ListAPIView):
+	"""
+	Список первых 16 заканчивающихся товаров.
+	Сортировка по кол-ву от меньшего к большему либо по кол-ву продаж.
+	"""
+	queryset = (
+		Product.objects
+		.select_related('category')
+		.prefetch_related('images', 'tags', 'reviews')
+		.filter(count__gte=1, archived=False)
+		.order_by('count', 'salesCount')
+	)[:16]
+	serializer_class = CatalogSerializer
 
 
 class SaleView(ListAPIView):
-	queryset = Product.objects.filter(salePrice__isnull=False)
-	pagination_class = CustomPagination
-	serializer_class = ProductSaleSerializer
+	"""
+	Список первых 8 товаров с ценой по акции.
+	Сортировка по кол-ву продаж.
+	"""
+	queryset = (
+		Product.objects
+		.select_related('category')
+		.prefetch_related('images', 'tags', 'reviews')
+		.filter(
+			count__gte=1,
+			salePrice__isnull=False,
+			dateFrom__lte=datetime.now().date(),
+			dateTo__gte=datetime.now().date(),
+			archived=False
+		)
+		.order_by('salesCount')
+	)[:8]
+	pagination_class = CatalogPagination
+	serializer_class = CatalogSaleSerializer
