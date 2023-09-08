@@ -46,7 +46,7 @@
 ### Клонирование репозитория
 * Перейдите в папку проекта и выполните команду в консоли `git clone`, чтобы скопировать файлы репозитория
 ```
-https://gitlab.skillbox.ru/artem_karmanov/python_django_diploma.git
+git clone https://gitlab.skillbox.ru/artem_karmanov/python_django_diploma.git
 ```
 
 <a name="install-env"></a>
@@ -55,7 +55,7 @@ https://gitlab.skillbox.ru/artem_karmanov/python_django_diploma.git
 * Укажите данные в файле `.env`
   * Секретный ключ проекта в переменную **DJANGO_SECRET_KEY**
   * Режим Debug в проекте (значение «1» обозначает True, при значении «0» будет False) в переменную **DJANGO_DEBUG**
-  * Дополнительные IP-адреса через запятую без пробелов в переменную **DJANGO_ALLOWED_HOSTS**
+  * Дополнительные IP-адреса через запятую без пробелов в переменную **DJANGO_ALLOWED_HOSTS** (при необходимости)
 ```
 DJANGO_SECRET_KEY=Секретный ключ
 DJANGO_DEBUG=1

@@ -3205,7 +3205,7 @@
   },
   {
     "model": "auth.user",
-    "pk": 25,
+    "pk": 2,
     "fields": {
       "password": "pbkdf2_sha256$600000$96InkuO1t6h1QL3553cVgS$wVf7t5Q7QIa6TECx/OiaCmn/nIbnDNOV5yRiiING2Ko=",
       "last_login": "2023-08-22T09:06:32.701Z",
@@ -3223,7 +3223,7 @@
   },
   {
     "model": "auth.user",
-    "pk": 28,
+    "pk": 3,
     "fields": {
       "password": "pbkdf2_sha256$600000$mhinvMaYSNDLCGSXlV7xSn$jFm3ALDz8creKouRPiKxGLam/UqkcDmZGaXKjEIHVq0=",
       "last_login": "2023-08-22T07:06:53.697Z",
@@ -3405,9 +3405,9 @@
   },
   {
     "model": "profileapp.profile",
-    "pk": 13,
+    "pk": 2,
     "fields": {
-      "user": 25,
+      "user": 2,
       "fullName": "Леонид Александрович",
       "email": null,
       "phone": null,
@@ -3417,9 +3417,9 @@
   },
   {
     "model": "profileapp.profile",
-    "pk": 16,
+    "pk": 3,
     "fields": {
-      "user": 28,
+      "user": 3,
       "fullName": "Пётр Петрович",
       "email": null,
       "phone": null,
@@ -4861,7 +4861,7 @@
     "pk": 34,
     "fields": {
       "createdAt": "2023-08-22T09:13:22.342Z",
-      "profile": 13,
+      "profile": 2,
       "fullName": "Леонид Александрович",
       "email": "leonid.velikii@yandex.ru",
       "phone": 89001234567,
