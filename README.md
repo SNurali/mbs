@@ -46,7 +46,7 @@
 ### Клонирование репозитория
 * Перейдите в папку проекта и выполните команду в консоли `git clone`, чтобы скопировать файлы репозитория
 ```
-git clone https://github.com/PanicNyan/Django_online_store
+git clone https://github.com/PanicNyan/Django_online_store.git
 ```
 
 <a name="install-env"></a>
