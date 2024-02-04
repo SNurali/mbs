@@ -2,7 +2,7 @@
 
 <html lang="ru">
 <head>
-  <title>Megano</title>
+  <title>MBSERGELI</title>
   <meta name="description" content="Описание страницы">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -36,9 +36,9 @@
         <div class="row ControlPanel-row">
           <div class="row-block">
             <div class="row ControlPanel-rowSplit">
-              <div class="row-block"><a class="ControlPanel-title" href="#">Free delivery</a>
+              <div class="row-block"><a class="ControlPanel-title" href="#">Бесплатная доставка</a>
               </div>
-              <div class="row-block hide_700"><span class="ControlPanel-title">Follow Us</span>
+              <div class="row-block hide_700"><span class="ControlPanel-title">Будте с нами</span>
                 <ul class="menu menu_img menu_smallImg ControlPanel-menu">
                   <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'frontend/assets/img/icons/socialHeader/fb.svg' %}" alt="fb.svg"/></a></li>
                   <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'frontend/assets/img/icons/socialHeader/tw.svg' %}" alt="tw.svg"/></a></li>
@@ -56,10 +56,10 @@
                     <a class="ControlPanel-title" href="/profile">{{ user.username }}</a>
                   </div>
                   <div class="row-block">
-                    <a class="ControlPanel-title" href="#" @click.prevent="signOut()">Log out</a>
+                    <a class="ControlPanel-title" href="#" @click.prevent="signOut()">Выход из аккаунта</a>
                   </div>
                 {% else %}
-                  <div class="row-block"><a class="ControlPanel-title" href="/sign-in">Login / Register</a></div>
+                  <div class="row-block"><a class="ControlPanel-title" href="/sign-in">Вход / Регистрация</a></div>
                 {% endif %}
             </div>
           </nav>
@@ -73,12 +73,12 @@
         <nav class="row-block row-block_right Header-menu">
           <div class="menuModal" id="navigate">
             <ul class="menu menu_main">
-              <li class="menu-item"><a class="menu-link" href="/">Home</a>
+              <li class="menu-item"><a class="menu-link" href="/">Главный</a>
               </li>
 
-              <li class="menu-item"><a class="menu-link" href="/sale">Sale</a>
+              <li class="menu-item"><a class="menu-link" href="/sale">Продается</a>
               </li>
-              <li class="menu-item"><span class="menu-label menu-label_success">Hot</span><a class="menu-link" href="/catalog">Catalog</a>
+              <li class="menu-item"><span class="menu-label menu-label_success">Горячий поступления</span><a class="menu-link" href="/catalog">Категории</a>
               </li>
 
 <!--              <li class="menu-item"><a class="menu-link" href="/catalog">Purchase</a>-->
@@ -109,7 +109,7 @@
           <div class="CategoriesButton">
             <div class="CategoriesButton-title">
               <div class="CategoriesButton-icon"><img src="{% static 'frontend/assets/img/icons/allDep.svg' %}" alt="allDep.svg"/>
-              </div><span class="CategoriesButton-text">All Departments</span>
+              </div><span class="CategoriesButton-text">Все отделы</span>
               <div class="CategoriesButton-arrow">
               </div>
             </div>
@@ -144,7 +144,7 @@
           <div class="search">
             <form class="form form_search"  @submit.prevent="search">
               <input class="search-input" id="query" name="query" type="text" v-model="searchText" placeholder="What are you looking for ..."/>
-              <button class="search-button" type="submit" name="search" id="search"><img src="{% static 'frontend/assets/img/icons/search.svg' %}" alt="search.svg"/>Search
+              <button class="search-button" type="submit" name="search" id="search"><img src="{% static 'frontend/assets/img/icons/search.svg' %}" alt="search.svg"/>ПОИСК
               </button>
             </form>
           </div>
@@ -159,7 +159,7 @@
     <div class="wrap">
       <div class="row Footer-main">
         <div class="row-block"><a class="logo Footer-logo" href="/"><img class="logo-image" src="{% static 'frontend/assets/img/logo_footer.png' %}" alt="logo_footer.png"/></a>
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincid  unt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad
+          <p>Цена: Мы предлагаем самые низкие цены на автозапчасти в Сергелинском авторынке. Наша цель - сделать автозапчасти доступными для всех.
           </p>
           <ul class="menu menu_img menu_smallImg Footer-menuSoc">
             <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'frontend/assets/img/icons/socialFooter/fb.svg' %}" alt="fb.svg"/></a></li>
@@ -170,32 +170,32 @@
           </ul>
         </div>
         <div class="row-block">
-          <strong class="Footer-title">Useful Links
+          <strong class="Footer-title">Полезные ссылки
           </strong>
           <ul class="menu menu_vt Footer-menu">
-            <li class="menu-item"><a class="menu-link" href="#">Checkout</a>
+            <li class="menu-item"><a class="menu-link" href="#">Проверка</a>
             </li>
-            <li class="menu-item"><a class="menu-link" href="#">My Cart</a>
+            <li class="menu-item"><a class="menu-link" href="#">Моя корзина</a>
             </li>
-            <li class="menu-item"><a class="menu-link" href="#">Delivery</a>
+            <li class="menu-item"><a class="menu-link" href="#">Доставка</a>
             </li>
-            <li class="menu-item"><a class="menu-link" href="#">Order Info</a>
+            <li class="menu-item"><a class="menu-link" href="#">Информация о заказе</a>
             </li>
-            <li class="menu-item"><a class="menu-link" href="#">Terms</a>
+            <li class="menu-item"><a class="menu-link" href="#">Условия</a>
             </li>
-            <li class="menu-item"><a class="menu-link" href="#">Conditions</a>
+            <li class="menu-item"><a class="menu-link" href="#">Условия</a>
             </li>
           </ul>
         </div>
         <div class="row-block">
-          <strong class="Footer-title">My Account
+          <strong class="Footer-title">Мой аккаунт
           </strong>
           <ul class="menu menu_vt Footer-menu">
-            <li class="menu-item"><a class="menu-link" href="#">Accessories</a>
+            <li class="menu-item"><a class="menu-link" href="#">Аксессуары</a>
             </li>
-            <li class="menu-item"><a class="menu-link" href="#">Bags</a>
+            <li class="menu-item"><a class="menu-link" href="#">Двигатель</a>
             </li>
-            <li class="menu-item"><a class="menu-link" href="#">Cameras</a>
+            <li class="menu-item"><a class="menu-link" href="#">СИСТЕМА УПРАВЛЕНИЯ И ПИТАНИЯ</a>
             </li>
             <li class="menu-item"><a class="menu-link" href="#">Clothings</a>
             </li>
@@ -208,7 +208,7 @@
         <div class="row-block">
           <strong class="Footer-title">Contacts
           </strong>
-          <p>Phone: 8.800.200.600<br>Email: Support@ninzio.com<br>Skype: techno<br>Address: New York, north<br>Avenue 26/7<br>0057
+          <p>Телефон: +998990309986<br>Email: Snurlai1986@gmail.com<br>Адресс:г.Ташкент Сергелинский авто рынок <br>Блок 1/1/2
           </p>
         </div>
       </div>
@@ -216,9 +216,9 @@
     <div class="Footer-copy">
       <div class="wrap">
         <div class="row row_space">
-          <div class="row-block">© Copyright&#32;<a href="#">Megano Store.</a>&#32;All rights reserved.
+          <div class="row-block">© Copyright&#32;<a href="#">MBSERGELI</a>&#32;All rights reserved.
           </div>
-          <div class="row-block"><span>Accepted Payments</span>
+          <div class="row-block"><span>Принятые платежи</span>
             <div class="Footer-payments">
               <div><img src="{% static 'frontend/assets/img/payments/visa.png' %}" alt="visa.png"/></div>
               <div><img src="{% static 'frontend/assets/img/payments/mastercard.png' %}" alt="mastercard.png"/></div>
