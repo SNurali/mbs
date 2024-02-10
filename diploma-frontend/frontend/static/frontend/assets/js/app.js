@@ -78,21 +78,21 @@ createApp({
 					this.basket = {}
 				})
 		},
-		// getLastOrder() {
-		// 	this.getData('/api/orders/active/')
-		// 		.then(data => {
-		// 			this.order = {
-		// 				...this.order,
-		// 				...data
-		// 			}
-		// 		})
-		// 		.catch(() => {
-		// 			console.warn('Ошибка при получении активного заказа')
-		// 			this.order = {
-		// 				...this.order,
-		// 			}
-		// 		})
-		// },
+		getLastOrder() {
+			this.getData('/api/orders/active/')
+				.then(data => {
+					this.order = {
+						...this.order,
+						...data
+					}
+				})
+				.catch(() => {
+					console.warn('Ошибка при получении активного заказа')
+					this.order = {
+						...this.order,
+					}
+				})
+		},
 		addToBasket(item, count = 1) {
 			const { id } = item
 			this.postData('/api/basket', { id, count })
@@ -146,7 +146,7 @@ createApp({
 			filters: {
 				price: {
 					minValue: 1,
-					maxValue: 500000,
+					maxValue: 2000000,
 					currentFromValue: 7,
 					currentToValue: 27,
 				},
@@ -158,34 +158,34 @@ createApp({
 				{ id: 'date', title: 'Новизне' },
 			],
 			topTags: [],
-			// reused data
+			reused data
 			categories: [],
-			// reused data
+			reused data
 			catalogFromServer: [],
 			orders: [],
 			cart: [],
 			paymentData: {},
 			basket: {},
-			// order: {
-			// 	orderId: null,
-			// 	createdAt: '',
-			// 	products: [],
-			// 	fullName: '',
-			// 	phone: '',
-			// 	email: '',
-			// 	deliveryType: '',
-			// 	city: '',
-			// 	address: '',
-			// 	paymentType: '',
-			// 	totalCost: 0,
-			// 	status: ''
-			// },
+			order: {
+				orderId: null,
+				createdAt: '',
+				products: [],
+				fullName: '',
+				phone: '',
+				email: '',
+				deliveryType: 'ordinary',
+				city: '',
+				address: '',
+				paymentType: 'online',
+				totalCost: 0,
+				status: ''
+			},
 			searchText: '',
 		}
 	},
 	mounted() {
 		this.getCategories()
 		this.getBasket()
-		// this.getLastOrder()
+		this.getLastOrder()
 	},
 }).mount('#site')

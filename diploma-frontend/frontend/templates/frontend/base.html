@@ -6,7 +6,7 @@
   <meta name="description" content="Описание страницы">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-  <link href="{% static 'frontend/favicon.ico' %}" rel="shortcut icon">
+  <link href="{% static 'frontend/logo.png' %}" rel="shortcut icon">
   <link href="{% static 'frontend/assets/fonts/Roboto/Roboto-Regular.woff' %}" as="font">
   <link href="{% static 'frontend/assets/fonts/Roboto/Roboto-Italic.woff' %}" as="font">
   <link href="{% static 'frontend/assets/fonts/Roboto/Roboto-Bold.woff' %}" as="font">
@@ -89,7 +89,7 @@
         <div class="row-block">
           <div class="CartBlock"><a class="CartBlock-block" href="/cart/">
             <img class="CartBlock-img" src="{% static 'frontend/assets/img/icons/cart.svg' %}" alt="cart.svg"/><span class="CartBlock-amount" v-text="basketCount.count"></span></a>
-            <div class="CartBlock-block"><span class="CartBlock-price">${basketCount.price}$$</span>
+            <div class="CartBlock-block"><span class="CartBlock-price">${basketCount.price}$ сум</span>
             </div>
           </div>
         </div>
@@ -143,7 +143,7 @@
         <div class="Header-search">
           <div class="search">
             <form class="form form_search"  @submit.prevent="search">
-              <input class="search-input" id="query" name="query" type="text" v-model="searchText" placeholder="What are you looking for ..."/>
+              <input class="search-input" id="query" name="query" type="text" v-model="searchText" placeholder="Что вас интересует ..."/>
               <button class="search-button" type="submit" name="search" id="search"><img src="{% static 'frontend/assets/img/icons/search.svg' %}" alt="search.svg"/>ПОИСК
               </button>
             </form>

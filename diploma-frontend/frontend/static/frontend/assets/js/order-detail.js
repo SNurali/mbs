@@ -1,57 +1,41 @@
 var mix = {
 	methods: {
 		getOrder(orderId) {
-			if(typeof orderId !== 'number') return
-			this.getData(`/api/order/${orderId}`)
-				.then(data => {
-					this.orderId = data.id
-					this.createdAt = data.createdAt
-					this.fullName = data.fullName
-					this.phone = data.phone
-					this.email = data.email
-					this.deliveryType = data.deliveryType
-					this.city = data.city
-					this.address = data.address
-					this.paymentType = data.paymentType
-					this.status = data.status
-					this.totalCost = data.totalCost
-					this.products = data.products
-					console.log(this.products)
-					if (typeof data.paymentError !== 'undefined') {
-						this.paymentError = data.paymentError
-					}
-				})
+			...
 		},
-		confirmOrder() {
-			if (this.orderId !== null) {
-				this.postData(`/api/order/${this.orderId}`, { ...this })
-					.then(({ data: { orderId } }) => {
-						alert('Заказ подтвержден')
-						location.replace(`/payment/${orderId}/`)
-					})
-					.catch(() => {
-						console.warn('Ошибка при подтверждения заказа')
-					})
-			}
-		},
-		auth() {
-			const username = document.querySelector('#username').value
-			const password = document.querySelector('#password').value
-			this.postData('/api/sign-in', JSON.stringify({ username, password }))
-				.then(({ data, status }) => {
-					location.assign(`/orders/${this.orderId}`)
-				})
-				.catch(() => {
-					alert('Ошибка авторизации')
-				})
-		}
+        confirmOrder() {
+            if (this.orderId !== null) {
+                const orderData = {
+                    fullName: this.fullName,
+                    phone: this.phone,
+                    email: this.email,
+                    deliveryType: this.deliveryType,
+                    city: this.city,
+                    address: this.address,
+                    paymentType: this.paymentType,
+                    products: this.products,
+                };
+
+                this.postData(`/api/order/${this.orderId}`, orderData)
+                    .then(({data: {orderId}}) => {
+                        alert('Заказ подтвержден');
+                        // Если выбран вариант "Оплата при получении", переходим на страницу заказа
+                        if (this.paymentType === 'cashOnDelivery'){
+                            location.replace(`/orders/${this.orderId}/`);
+                        } else{
+                            // Иначе осуществляем переход на страницу оплаты
+                            location.replace(`/payment/${this.orderId}/`);
+                        }
+                    })
+                    .catch(() => {
+                        console.warn('Ошибка при подтверждения заказа')
+                    })
+            }
+        },
+		...
 	},
 	mounted() {
-		if(location.pathname.startsWith('/orders/')) {
-			const orderId = location.pathname.replace('/orders/', '').replace('/', '')
-			this.orderId = orderId.length ? Number(orderId) : null
-			this.getOrder(this.orderId);
-		}
+		...
 	},
 	data() {
 		return {
@@ -67,7 +51,6 @@ var mix = {
 			status: null,
 			totalCost: null,
 			products: [],
-			paymentError: null,
 		}
 	},
 }
