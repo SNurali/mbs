@@ -1,5 +1,5 @@
 asgiref==3.7.2
-diploma-frontend @ file:///Users/snura/PycharmProjects/Django_online_store/diploma-frontend/dist/diploma-frontend.zip
+diploma-frontend @ file:///Users/snura/PycharmProjects/mbs/diploma-frontend/dist/diploma-frontend.zip
 Django==4.2.4
 django-filter==23.2
 django-request-logging==0.7.5
